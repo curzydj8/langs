@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>关键字手册 · 语言图鉴</title>
+<meta name="description" content="从二进制、八进制、十六进制讲起，详解 BASIC、Python、C、C++、C#、Java、Go、JavaScript、DOS 批处理的关键字用法。">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0a0d16;--card:#121830;--card2:#151d3a;--border:#232c4d;
+  --text:#e9edf8;--muted:#98a2c3;--a1:#6366f1;--a2:#22d3ee;--code:#080b14;
+}
+body{
+  background:radial-gradient(1100px 550px at 85% -5%,#1b2450 0%,transparent 60%),
+             radial-gradient(900px 500px at 5% 10%,#14243f 0%,transparent 55%),var(--bg);
+  color:var(--text);
+  font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;
+  min-height:100vh;line-height:1.7;
+}
+.topbar{
+  position:sticky;top:0;z-index:50;display:flex;align-items:center;gap:18px;
+  padding:14px 24px;background:rgba(10,13,22,.85);backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--border);
+}
+.logo{font-size:20px;font-weight:800;white-space:nowrap;text-decoration:none;color:var(--text)}
+.logo span{background:linear-gradient(90deg,var(--a1),var(--a2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.nav{display:flex;gap:6px}
+.nav a{color:var(--muted);text-decoration:none;font-size:14px;padding:8px 14px;border-radius:10px;transition:.18s;white-space:nowrap}
+.nav a:hover{color:var(--text);background:#141b36}
+.nav a.active{color:#fff;background:linear-gradient(90deg,var(--a1),var(--a2));font-weight:600}
+.search{flex:1;max-width:480px;margin-left:auto;display:flex}
+.search input{width:100%;padding:10px 16px;border-radius:999px;font-size:15px;color:var(--text);background:#0d1226;border:1px solid var(--border);outline:none;transition:.2s}
+.search input:focus{border-color:var(--a1);box-shadow:0 0 0 3px rgba(99,102,241,.25)}
+.search input::placeholder{color:#5b648a}
+.hero{max-width:1100px;margin:0 auto;padding:48px 24px 4px;text-align:center}
+.hero h1{font-size:clamp(30px,4.5vw,46px);font-weight:900;margin-bottom:10px}
+.hero h1 .grad{background:linear-gradient(90deg,var(--a1),var(--a2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p{color:var(--muted);max-width:680px;margin:0 auto;font-size:15px}
+.langnav{max-width:1100px;margin:18px auto 0;padding:0 24px;display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+.langnav a{padding:7px 15px;border-radius:999px;font-size:13px;text-decoration:none;color:var(--muted);background:#0d1226;border:1px solid var(--border);transition:.18s}
+.langnav a:hover{border-color:var(--a1);color:var(--text)}
+#searchinfo{max-width:1100px;margin:14px auto 0;padding:0 24px;font-size:14px;color:var(--a2);display:none}
+.doc{max-width:1100px;margin:0 auto;padding:34px 24px 10px}
+.doc h2{font-size:24px;margin-bottom:6px;display:flex;align-items:center;gap:10px}
+.doc h2 .cnt{font-size:12px;font-weight:400;color:var(--a2);background:rgba(34,211,238,.1);border:1px solid rgba(34,211,238,.3);padding:2px 12px;border-radius:999px}
+.lede{color:var(--muted);font-size:14.5px;margin-bottom:18px;max-width:860px}
+.doc h3{font-size:17px;margin:26px 0 12px;color:#cdd5f2}
+table{width:100%;border-collapse:collapse;font-size:14px;margin-bottom:8px}
+th,td{text-align:left;padding:10px 14px;border-bottom:1px solid var(--border);vertical-align:top}
+th{color:var(--muted);font-size:12.5px;font-weight:600;letter-spacing:1px;background:rgba(18,24,48,.6);position:sticky;top:64px}
+td.k{font-family:"JetBrains Mono",Consolas,monospace;color:#7dd3fc;font-weight:700;white-space:nowrap}
+td code{font-family:"JetBrains Mono",Consolas,monospace;font-size:12.5px;color:#a5f3d0;background:var(--code);padding:3px 8px;border-radius:6px;display:inline-block;white-space:pre-wrap;word-break:break-word}
+td.d{color:#c9d0ea}
+.note{background:rgba(99,102,241,.08);border:1px solid rgba(99,102,241,.3);border-radius:12px;padding:14px 18px;font-size:13.5px;color:#c9d0ea;margin:16px 0}
+.ncards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin:16px 0}
+.ncard{background:linear-gradient(160deg,var(--card),var(--card2));border:1px solid var(--border);border-radius:14px;padding:18px}
+.ncard h4{font-size:16px;margin-bottom:4px}
+.ncard .base{font-size:12px;color:var(--a2);margin-bottom:8px}
+.ncard p{font-size:13px;color:var(--muted)}
+.ncard code{font-family:Consolas,monospace;font-size:12px;color:#a5f3d0;background:var(--code);padding:2px 8px;border-radius:6px}
+.converter{background:linear-gradient(160deg,var(--card),var(--card2));border:1px solid var(--border);border-radius:16px;padding:22px;margin:16px 0}
+.cv-row-in{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.cv-row-in input{flex:1;min-width:180px;padding:10px 14px;border-radius:10px;background:#0d1226;border:1px solid var(--border);color:var(--text);font-size:15px;font-family:Consolas,monospace;outline:none}
+.cv-row-in input:focus{border-color:var(--a1)}
+.cv-row-in select{padding:10px 14px;border-radius:10px;background:#0d1226;border:1px solid var(--border);color:var(--text);font-size:14px}
+#cv-out .cv-line{display:flex;gap:12px;align-items:center;padding:8px 0;border-bottom:1px dashed var(--border);font-size:14px}
+#cv-out .cv-line span{width:70px;color:var(--muted);flex-shrink:0}
+#cv-out code{font-family:Consolas,monospace;color:#a5f3d0;font-size:14px;word-break:break-all}
+.err{color:#f87171;font-size:14px}
+footer{border-top:1px solid var(--border);padding:28px 24px;text-align:center;color:#6b7499;font-size:13px;margin-top:30px}
+@media(max-width:640px){
+  .topbar{flex-wrap:wrap}
+  .search{max-width:none;flex-basis:100%;margin-left:0}
+  th:nth-child(3),td:nth-child(3){display:none}
+  th{position:static}
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <a class="logo" href="index.html">💻 <span>语言图鉴</span></a>
+  <nav class="nav">
+    <a href="index.html">语言合集</a>
+    <a href="keywords.html" class="active">关键字手册</a>
+  </nav>
+  <div class="search"><input id="q" type="text" placeholder="搜索关键字，如：class、指针、循环…"></div>
+</header>
+
+<section class="hero">
+  <h1><span class="grad">关键字</span>手册</h1>
+  <p>从二进制、八进制、十六进制这些数制基础讲起，再逐语言解析关键字：每个关键字是做什么的、该怎么用，配中文讲解与代码示例。顶部搜索框可跨语言全局检索。</p>
+</section>
+
+<nav class="langnav" id="langnav"></nav>
+<div id="searchinfo"></div>
+
+<!-- ============ 数制基础 ============ -->
+<section class="doc" id="numsys" data-name="数制 二进制 八进制 十六进制 进制转换 位运算">
+  <h2>🔢 数制基础：二进制、八进制、十六进制</h2>
+  <p class="lede">计算机只认识 0 和 1（一个开关的开与关），所以<strong>二进制</strong>是机器的母语。但二进制写起来太长，人们又发明了<strong>八进制</strong>（3 位二进制一组）和<strong>十六进制</strong>（4 位一组）来缩写。理解这三种进制，是读懂所有编程语言的第一步。</p>
+
+  <div class="ncards">
+    <div class="ncard">
+      <h4>二进制 Binary</h4><div class="base">基数 2 · 符号：0, 1</div>
+      <p>每一位是一个 bit，8 位 = 1 字节。CPU 指令、内存、网络传输的底层都是它。</p>
+      <p style="margin-top:8px"><code>0b1010</code> = 10</p>
+    </div>
+    <div class="ncard">
+      <h4>八进制 Octal</h4><div class="base">基数 8 · 符号：0–7</div>
+      <p>3 位二进制合为 1 位八进制。Unix 文件权限 <code>0o755</code> 就是最经典的应用。</p>
+      <p style="margin-top:8px"><code>0o17</code> = 15</p>
+    </div>
+    <div class="ncard">
+      <h4>十六进制 Hex</h4><div class="base">基数 16 · 符号：0–9, A–F</div>
+      <p>4 位二进制合为 1 位十六进制。颜色 <code>#FF8800</code>、内存地址都用它表示。</p>
+      <p style="margin-top:8px"><code>0xFF</code> = 255</p>
+    </div>
+    <div class="ncard">
+      <h4>十进制 Decimal</h4><div class="base">基数 10 · 符号：0–9</div>
+      <p>人类日常用的进制。程序里不带前缀的数字默认都是十进制。</p>
+      <p style="margin-top:8px"><code>42</code> 就是 42</p>
+    </div>
+  </div>
+
+  <h3>进制换算对照表（0–15）</h3>
+  <table>
+    <thead><tr><th>十进制</th><th>二进制</th><th>八进制</th><th>十六进制</th></tr></thead>
+    <tbody>
+      <tr><td>0</td><td><code>0000</code></td><td><code>0</code></td><td><code>0</code></td></tr>
+      <tr><td>1</td><td><code>0001</code></td><td><code>1</code></td><td><code>1</code></td></tr>
+      <tr><td>2</td><td><code>0010</code></td><td><code>2</code></td><td><code>2</code></td></tr>
+      <tr><td>3</td><td><code>0011</code></td><td><code>3</code></td><td><code>3</code></td></tr>
+      <tr><td>4</td><td><code>0100</code></td><td><code>4</code></td><td><code>4</code></td></tr>
+      <tr><td>5</td><td><code>0101</code></td><td><code>5</code></td><td><code>5</code></td></tr>
+      <tr><td>6</td><td><code>0110</code></td><td><code>6</code></td><td><code>6</code></td></tr>
+      <tr><td>7</td><td><code>0111</code></td><td><code>7</code></td><td><code>7</code></td></tr>
+      <tr><td>8</td><td><code>1000</code></td><td><code>10</code></td><td><code>8</code></td></tr>
+      <tr><td>9</td><td><code>1001</code></td><td><code>11</code></td><td><code>9</code></td></tr>
+      <tr><td>10</td><td><code>1010</code></td><td><code>12</code></td><td><code>A</code></td></tr>
+      <tr><td>11</td><td><code>1011</code></td><td><code>13</code></td><td><code>B</code></td></tr>
+      <tr><td>12</td><td><code>1100</code></td><td><code>14</code></td><td><code>C</code></td></tr>
+      <tr><td>13</td><td><code>1101</code></td><td><code>15</code></td><td><code>D</code></td></tr>
+      <tr><td>14</td><td><code>1110</code></td><td><code>16</code></td><td><code>E</code></td></tr>
+      <tr><td>15</td><td><code>1111</code></td><td><code>17</code></td><td><code>F</code></td></tr>
+    </tbody>
+  </table>
+
+  <h3>各语言的字面量写法</h3>
+  <table>
+    <thead><tr><th>语言</th><th>二进制</th><th>八进制</th><th>十六进制</th></tr></thead>
+    <tbody>
+      <tr><td class="k">C / C++</td><td><code>0b1010</code>（C23/GCC扩展）</td><td><code>017</code>（0 开头）</td><td><code>0xFF</code></td></tr>
+      <tr><td class="k">Python</td><td><code>0b1010</code></td><td><code>0o17</code></td><td><code>0xFF</code></td></tr>
+      <tr><td class="k">Java</td><td><code>0b1010</code></td><td><code>017</code>（0 开头）</td><td><code>0xFF</code></td></tr>
+      <tr><td class="k">Go</td><td><code>0b1010</code></td><td><code>0o17</code></td><td><code>0xFF</code></td></tr>
+      <tr><td class="k">C#</td><td><code>0b1010</code></td><td>无字面量（用 Convert）</td><td><code>0xFF</code></td></tr>
+      <tr><td class="k">JavaScript</td><td><code>0b1010</code></td><td><code>0o17</code></td><td><code>0xFF</code></td></tr>
+      <tr><td class="k">Rust</td><td><code>0b1010</code></td><td><code>0o17</code></td><td><code>0xFF</code></td></tr>
+      <tr><td class="k">BASIC</td><td><code>&amp;B1010</code></td><td><code>&amp;O17</code></td><td><code>&amp;HFF</code></td></tr>
+      <tr><td class="k">DOS 批处理</td><td>—</td><td><code>set /a n=017</code></td><td><code>set /a n=0xFF</code></td></tr>
+    </tbody>
+  </table>
+  <div class="note">⚠️ 注意 C / Java 里 <code>017</code> 是八进制（= 十进制 15），不是十进制的 17！新手最容易在这里踩坑。Python 3 已废除这种写法，必须用 <code>0o17</code>。</div>
+
+  <h3>位运算：直接操作二进制位</h3>
+  <table>
+    <thead><tr><th>运算符</th><th>含义</th><th>示例</th><th>结果</th></tr></thead>
+    <tbody>
+      <tr><td class="k">&amp;</td><td class="d">按位与：都为 1 才为 1（常用于取掩码）</td><td><code>0b1100 &amp; 0b1010</code></td><td><code>0b1000</code> (8)</td></tr>
+      <tr><td class="k">|</td><td class="d">按位或：有一为 1 则为 1（常用于合并标志）</td><td><code>0b1100 | 0b1010</code></td><td><code>0b1110</code> (14)</td></tr>
+      <tr><td class="k">^</td><td class="d">按位异或：不同为 1（常用于翻转位、简单加密）</td><td><code>0b1100 ^ 0b1010</code></td><td><code>0b0110</code> (6)</td></tr>
+      <tr><td class="k">~</td><td class="d">按位取反：0 变 1、1 变 0</td><td><code>~0b1100</code></td><td><code>...0011</code> 取反</td></tr>
+      <tr><td class="k">&lt;&lt;</td><td class="d">左移：相当于 × 2ⁿ</td><td><code>0b0011 &lt;&lt; 2</code></td><td><code>0b1100</code> (12)</td></tr>
+      <tr><td class="k">&gt;&gt;</td><td class="d">右移：相当于 ÷ 2ⁿ</td><td><code>0b1100 &gt;&gt; 2</code></td><td><code>0b0011</code> (3)</td></tr>
+    </tbody>
+  </table>
+  <div class="note">💡 位运算几乎所有语言都通用（C / C++ / Java / Python / Go / C# / JavaScript 写法一致）。典型用途：权限掩码（如 <code>0o755</code>）、开关标志位、颜色通道提取（<code>(0xFF8800 &gt;&gt; 16) &amp; 0xFF</code> 取出红色分量）。</div>
+
+  <h3>🔄 进制转换器（试一试）</h3>
+  <div class="converter">
+    <div class="cv-row-in">
+      <input id="cv-in" placeholder="输入数字，如 255 或 FF">
+      <select id="cv-base">
+        <option value="10">十进制输入</option>
+        <option value="2">二进制输入</option>
+        <option value="8">八进制输入</option>
+        <option value="16">十六进制输入</option>
+      </select>
+    </div>
+    <div id="cv-out"></div>
+  </div>
+</section>
+
+<div id="kw-sections"></div>
+
+<footer>
+  <p>💻 语言图鉴 · 关键字手册</p>
+  <p>关键字版本随语言演进，以各语言官方文档为准</p>
+</footer>
+
+<script>
+/* ================= 关键字数据 ================= */
+const SECTIONS = [
+{id:"python", name:"🐍 Python", intro:"Python 以简洁可读著称，关键字只有 35 个（+ match/case 软关键字）。缩进即语法，没有花括号；动态类型让原型开发极快。", rows:[
+{k:"False",d:"布尔值“假”",e:`flag = False`},
+{k:"None",d:"空值，表示“什么都没有”，常作默认返回值",e:`x = None`},
+{k:"True",d:"布尔值“真”",e:`flag = True`},
+{k:"and",d:"逻辑与，两边都为真结果才为真",e:`if a > 0 and b > 0:`},
+{k:"as",d:"起别名，用于 import / except / with",e:`import numpy as np`},
+{k:"assert",d:"断言：条件为假就抛 AssertionError，常用于自检",e:`assert x > 0, "x必须为正数"`},
+{k:"async",d:"定义异步函数，配合 await 使用",e:`async def fetch():`},
+{k:"await",d:"等待协程执行完成，不阻塞事件循环",e:`data = await fetch()`},
+{k:"break",d:"立即跳出当前循环",e:`while True:\n    break`},
+{k:"class",d:"定义类",e:`class Dog:\n    pass`},
+{k:"continue",d:"跳过本次循环剩余部分，进入下一轮",e:`for i in range(5):\n    if i == 2:\n        continue`},
+{k:"def",d:"定义函数",e:`def add(a, b):\n    return a + b`},
+{k:"del",d:"删除变量、元素或属性",e:`del my_list[0]`},
+{k:"elif",d:"“否则如果”，接在 if 后面",e:`if x > 0:\n    ...\nelif x == 0:`},
+{k:"else",d:"否则分支；也可接 for/while（循环正常结束时执行）",e:`if x:\n    ...\nelse:`},
+{k:"except",d:"捕获 try 块中的异常",e:`try:\n    ...\nexcept ValueError:`},
+{k:"finally",d:"无论是否发生异常都会执行的收尾代码",e:`try:\n    ...\nfinally:\n    f.close()`},
+{k:"for",d:"遍历循环（序列、字典、生成器等）",e:`for i in range(3):\n    print(i)`},
+{k:"from",d:"从模块中导入指定成员",e:`from math import pi`},
+{k:"global",d:"声明在函数内使用全局变量",e:`global count`},
+{k:"if",d:"条件判断",e:`if age >= 18:\n    print("成年")`},
+{k:"import",d:"导入模块",e:`import math`},
+{k:"in",d:"成员判断；也可用于 for 遍历",e:`if "a" in "abc":`},
+{k:"is",d:"判断是否为同一对象（不是值相等）",e:`if x is None:`},
+{k:"lambda",d:"定义匿名函数，只能有一条表达式",e:`f = lambda x: x * 2`},
+{k:"nonlocal",d:"声明使用外层（非全局）函数的变量",e:`nonlocal x`},
+{k:"not",d:"逻辑非",e:`if not done:`},
+{k:"or",d:"逻辑或，常用于设置默认值",e:`x = a or b`},
+{k:"pass",d:"空占位语句，什么都不做",e:`def todo():\n    pass`},
+{k:"raise",d:"主动抛出异常",e:`raise ValueError("非法输入")`},
+{k:"return",d:"返回值并结束函数",e:`return x + y`},
+{k:"try",d:"可能抛异常的代码块，与 except/finally 搭配",e:`try:\n    risky()`},
+{k:"while",d:"条件循环，条件为真就一直执行",e:`while x < 5:\n    x += 1`},
+{k:"with",d:"上下文管理，自动释放资源（如文件）",e:`with open("a.txt") as f:`},
+{k:"yield",d:"把函数变成生成器：产出值并暂停",e:`def gen():\n    yield 1`},
+{k:"match",d:"结构化模式匹配（3.10+，软关键字）",e:`match cmd:\n    case "quit":`},
+{k:"case",d:"match 的分支，可带匹配模式（软关键字）",e:`case 1 | 2:`}
+]},
+{id:"c", name:"⚙️ C", intro:"C 语言贴近硬件，只有 32 个核心关键字。类型、存储、流程控制泾渭分明，操作系统与嵌入式开发的母语。", rows:[
+{k:"auto",d:"自动存储类型（函数内局部变量默认，可省略）",e:`auto int n = 0;`},
+{k:"break",d:"跳出 switch 或循环",e:`break;`},
+{k:"case",d:"switch 的分支标签",e:`case 1: printf("一"); break;`},
+{k:"char",d:"字符类型（1 字节）",e:`char c = 'A';`},
+{k:"const",d:"常量限定：定义后不允许修改",e:`const int N = 100;`},
+{k:"continue",d:"跳过本次循环剩余部分",e:`continue;`},
+{k:"default",d:"switch 的默认分支",e:`default: printf("其他");`},
+{k:"do",d:"do-while 循环：先执行一次再判断条件",e:`do { n--; } while (n > 0);`},
+{k:"double",d:"双精度浮点数",e:`double pi = 3.14159;`},
+{k:"else",d:"if 的否则分支",e:`else { printf("不满足"); }`},
+{k:"enum",d:"枚举类型：一组命名整型常量",e:`enum Color { RED, GREEN, BLUE };`},
+{k:"extern",d:"声明变量/函数定义在别处（外部链接）",e:`extern int g_value;`},
+{k:"float",d:"单精度浮点数",e:`float f = 1.5f;`},
+{k:"for",d:"计数循环：初始化;条件;步进",e:`for (i = 0; i < 10; i++) { }`},
+{k:"goto",d:"无条件跳转到标签（易造成面条代码，慎用）",e:`goto cleanup;`},
+{k:"if",d:"条件判断",e:`if (x > 0) { printf("正数"); }`},
+{k:"inline",d:"建议编译器内联展开函数，减少调用开销",e:`inline int max(int a, int b) { return a>b?a:b; }`},
+{k:"int",d:"整型（通常 4 字节）",e:`int n = 10;`},
+{k:"long",d:"长整型",e:`long big = 100000L;`},
+{k:"register",d:"建议把变量存入寄存器（现代编译器多忽略）",e:`register int i;`},
+{k:"restrict",d:"承诺指针不别名，助编译器优化（C99）",e:`int * restrict p = arr;`},
+{k:"return",d:"从函数返回（可带返回值）",e:`return 0;`},
+{k:"short",d:"短整型（通常 2 字节）",e:`short s = 1;`},
+{k:"signed",d:"有符号（整型的默认符号）",e:`signed int x = -5;`},
+{k:"sizeof",d:"运算符：取类型或变量的字节数",e:`printf("%zu", sizeof(int));`},
+{k:"static",d:"静态存储：函数内保持值；文件内限制可见域",e:`static int count = 0;`},
+{k:"struct",d:"结构体：把不同类型数据打包",e:`struct Point { int x, y; };`},
+{k:"switch",d:"多分支选择，常与 case/break 搭配",e:`switch (n) { case 1: ...; break; }`},
+{k:"typedef",d:"给类型起别名",e:`typedef unsigned int uint;`},
+{k:"union",d:"共用体：成员共享同一块内存",e:`union Data { int i; float f; };`},
+{k:"unsigned",d:"无符号整型",e:`unsigned int u = 5;`},
+{k:"void",d:"无类型：无返回值 / 无参数 / 通用指针",e:`void func(void);`},
+{k:"volatile",d:"易变：禁止编译器优化，每次都从内存读",e:`volatile int flag;`},
+{k:"while",d:"条件循环",e:`while (n--) { }`}
+], note:"C11 新增 _Alignas / _Alignof / _Atomic / _Generic / _Noreturn / _Static_assert / _Thread_local；C23 新增 bool / true / false / constexpr / typeof 等，逐步替代下划线版本。"},
+,{id:"cpp", name:"➕ C++", intro:"C++ 在 C 的 32 个关键字上扩展出近百个：面向对象、模板、异常、现代并发与编译期计算。零成本抽象的代价就是关键字多——但每个都有明确分工。", rows:[
+{k:"alignas",d:"指定变量/类型的内存对齐字节数",e:`alignas(16) char buf[64];`},
+{k:"alignof",d:"查询类型的对齐要求（字节数）",e:`static_assert(alignof(int) == 4);`},
+{k:"asm",d:"嵌入汇编代码",e:`asm("nop");`},
+{k:"auto",d:"自动类型推导（C++11 起的核心特性）",e:`auto x = 42;`},
+{k:"bool",d:"布尔类型",e:`bool ok = true;`},
+{k:"break",d:"跳出 switch / 循环",e:`break;`},
+{k:"case",d:"switch 分支标签",e:`case 1: ...; break;`},
+{k:"catch",d:"捕获 try 抛出的异常",e:`catch (const std::exception& e) { }`},
+{k:"char",d:"字符类型",e:`char c = 'a';`},
+{k:"char8_t/16_t/32_t",d:"UTF-8/16/32 字符类型（C++20/11）",e:`char8_t c = u8'a';`},
+{k:"wchar_t",d:"宽字符类型",e:`wchar_t w = L'中';`},
+{k:"class",d:"定义类",e:`class A { public: int x; };`},
+{k:"concept",d:"概念：约束模板参数（C++20）",e:`template<typename T> concept Num = std::integral<T>;`},
+{k:"const",d:"常量：定义后不可修改",e:`const int N = 10;`},
+{k:"consteval",d:"强制编译期求值的函数（C++20）",e:`consteval int sq(int n) { return n*n; }`},
+{k:"constexpr",d:"编译期常量/函数",e:`constexpr int N = 4 * 4;`},
+{k:"constinit",d:"保证静态初始化在编译期完成（C++20）",e:`constinit int x = 5;`},
+{k:"const_cast",d:"去除 const / volatile 限定",e:`int& r = const_cast<int&>(cx);`},
+{k:"continue",d:"跳过本次循环",e:`continue;`},
+{k:"co_await",d:"协程：等待异步操作（C++20）",e:`co_await task;`},
+{k:"co_return",d:"协程：返回值并结束",e:`co_return 42;`},
+{k:"co_yield",d:"协程：产出值并挂起",e:`co_yield i;`},
+{k:"decltype",d:"推导表达式的类型",e:`decltype(x) y = x;`},
+{k:"default",d:"switch 默认分支；=default 显式默认函数",e:`A() = default;`},
+{k:"delete",d:"释放 new 分配的内存；=delete 删除函数",e:`delete p;`},
+{k:"do",d:"do-while 循环",e:`do { } while (x > 0);`},
+{k:"double",d:"双精度浮点",e:`double d = 3.14;`},
+{k:"dynamic_cast",d:"多态类型安全向下转型（失败返回 nullptr）",e:`auto* d = dynamic_cast<Derived*>(base);`},
+{k:"else",d:"if 的否则分支",e:`else { }`},
+{k:"enum",d:"枚举；enum class 为强类型枚举",e:`enum class Color { Red, Blue };`},
+{k:"explicit",d:"禁止构造函数的隐式转换",e:`explicit A(int x);`},
+{k:"export",d:"导出模板；C++20 用于模块",e:`export module mymod;`},
+{k:"extern",d:"外部链接声明",e:`extern int g;`},
+{k:"false",d:"布尔假",e:`bool b = false;`},
+{k:"float",d:"单精度浮点",e:`float f = 1.5f;`},
+{k:"for",d:"循环（含范围 for）",e:`for (int x : vec) { }`},
+{k:"friend",d:"友元：授权访问私有成员",e:`friend class B;`},
+{k:"goto",d:"无条件跳转（慎用）",e:`goto end;`},
+{k:"if",d:"条件判断（含 constexpr if）",e:`if constexpr (sizeof(int)==4) { }`},
+{k:"inline",d:"内联建议；头文件中定义函数防重定义",e:`inline int f() { return 1; }`},
+{k:"int",d:"整型",e:`int n = 0;`},
+{k:"long",d:"长整型",e:`long x = 0L;`},
+{k:"mutable",d:"允许在 const 对象中修改该成员",e:`mutable int cache;`},
+{k:"namespace",d:"命名空间，避免名字冲突",e:`namespace ns { int x; }`},
+{k:"new",d:"动态分配内存并构造对象",e:`int* p = new int(5);`},
+{k:"noexcept",d:"声明函数不抛异常（助优化）",e:`void f() noexcept;`},
+{k:"and/or/not 等",d:"替代标记：and(&&) or(||) not(!) bitand(&) bitor(|) xor(^) compl(~) 及复合赋值版",e:`if (a and b) { }`},
+{k:"nullptr",d:"空指针字面量（替代 NULL）",e:`int* p = nullptr;`},
+{k:"operator",d:"重载运算符",e:`bool operator==(const A& o) const;`},
+{k:"private",d:"私有访问权限",e:`private: int x;`},
+{k:"protected",d:"保护访问权限（类内+子类可见）",e:`protected: int y;`},
+{k:"public",d:"公有访问权限",e:`public: int z;`},
+{k:"reinterpret_cast",d:"底层位重解释转换（最危险）",e:`char* c = reinterpret_cast<char*>(p);`},
+{k:"requires",d:"模板约束表达式（C++20）",e:`template<typename T> requires std::integral<T>`},
+{k:"return",d:"返回",e:`return x;`},
+{k:"short",d:"短整型",e:`short s = 1;`},
+{k:"signed",d:"有符号",e:`signed x = -1;`},
+{k:"sizeof",d:"取字节数；sizeof... 取参数包长度",e:`sizeof(int)`},
+{k:"static",d:"静态成员/内部链接/静态局部",e:`static int n = 0;`},
+{k:"static_assert",d:"编译期断言，失败则编译报错",e:`static_assert(sizeof(int)==4);`},
+{k:"static_cast",d:"常规显式类型转换",e:`double d = static_cast<double>(n);`},
+{k:"struct",d:"结构体（默认成员 public）",e:`struct P { int x, y; };`},
+{k:"switch",d:"多分支选择",e:`switch (n) { case 1: break; }`},
+{k:"template",d:"模板：泛型编程",e:`template<typename T> T max(T a, T b);`},
+{k:"this",d:"指向当前对象的指针",e:`this->x = x;`},
+{k:"thread_local",d:"线程局部存储（每线程一份）",e:`thread_local int n;`},
+{k:"throw",d:"抛出异常",e:`throw std::runtime_error("oops");`},
+{k:"true",d:"布尔真",e:`bool b = true;`},
+{k:"try",d:"异常捕获块",e:`try { f(); } catch (...) { }`},
+{k:"typedef",d:"类型别名（老式，推荐 using）",e:`typedef int myint;`},
+{k:"typeid",d:"运行时类型信息（RTTI）",e:`typeid(x).name()`},
+{k:"typename",d:"模板类型参数；指明依赖类型",e:`typename T::value_type v;`},
+{k:"union",d:"共用体",e:`union U { int i; float f; };`},
+{k:"unsigned",d:"无符号",e:`unsigned u = 1u;`},
+{k:"using",d:"类型别名；引入命名空间成员",e:`using uint = unsigned int;`},
+{k:"virtual",d:"虚函数（多态）；虚继承",e:`virtual void draw();`},
+{k:"void",d:"无类型",e:`void f();`},
+{k:"volatile",d:"易变，禁止优化",e:`volatile bool ready;`},
+{k:"while",d:"条件循环",e:`while (n--) { }`}
+]},
+{id:"csharp", name:"🔷 C#", intro:"C# 是 .NET 的旗舰语言：Java 式语法 + 丰富语法糖。从 async/await 到 record、required，关键字随版本持续生长；上下文关键字只在特定位置生效。", rows:[
+{k:"abstract",d:"抽象类/方法：不能实例化，子类必须实现",e:`abstract class Shape { public abstract double Area(); }`},
+{k:"as",d:"安全类型转换，失败返回 null（引用类型）",e:`string s = obj as string;`},
+{k:"base",d:"调用基类的构造/成员",e:`base.Method();`},
+{k:"bool",d:"布尔类型",e:`bool ok = true;`},
+{k:"break",d:"跳出循环/switch",e:`break;`},
+{k:"byte",d:"8 位无符号整数",e:`byte b = 255;`},
+{k:"sbyte",d:"8 位有符号整数",e:`sbyte sb = -5;`},
+{k:"case",d:"switch 分支",e:`case 1: ...; break;`},
+{k:"catch",d:"捕获异常",e:`catch (Exception ex) { }`},
+{k:"char",d:"16 位 Unicode 字符",e:`char c = 'A';`},
+{k:"checked",d:"检查算术溢出并抛异常",e:`checked { x++; }`},
+{k:"class",d:"定义引用类型",e:`class Person { }`},
+{k:"const",d:"编译期常量",e:`const int N = 100;`},
+{k:"continue",d:"跳过本次循环",e:`continue;`},
+{k:"decimal",d:"128 位高精度小数（金融计算）",e:`decimal m = 1.99m;`},
+{k:"default",d:"switch 默认分支；default(T) 取默认值",e:`int x = default;`},
+{k:"delegate",d:"委托：类型安全的函数指针",e:`delegate void Handler();`},
+{k:"do",d:"do-while 循环",e:`do { } while (x > 0);`},
+{k:"double",d:"双精度浮点",e:`double d = 3.14;`},
+{k:"else",d:"if 的否则分支",e:`else { }`},
+{k:"enum",d:"枚举",e:`enum Level { Low, High }`},
+{k:"event",d:"事件：基于委托的发布订阅",e:`event Action Changed;`},
+{k:"explicit",d:"自定义显式转换运算符",e:`public static explicit operator int(X x)`},
+{k:"implicit",d:"自定义隐式转换运算符",e:`public static implicit operator string(X x)`},
+{k:"extern",d:"外部方法（常配合 DllImport）",e:`[DllImport("a.dll")] extern static void F();`},
+{k:"false",d:"布尔假",e:`bool b = false;`},
+{k:"finally",d:"异常收尾块",e:`finally { conn.Close(); }`},
+{k:"fixed",d:"固定变量地址，防 GC 移动（unsafe 内）",e:`fixed (int* p = &x) { }`},
+{k:"float",d:"单精度浮点",e:`float f = 1.5f;`},
+{k:"for",d:"计数循环",e:`for (int i = 0; i < 10; i++) { }`},
+{k:"foreach",d:"遍历集合",e:`foreach (var x in list) { }`},
+{k:"goto",d:"跳转（也用于 switch 穿透）",e:`goto case 1;`},
+{k:"if",d:"条件判断",e:`if (x > 0) { }`},
+{k:"in",d:"foreach 变量；泛型逆变",e:`interface I<in T> { }`},
+{k:"int",d:"32 位整数",e:`int n = 0;`},
+{k:"uint",d:"32 位无符号整数",e:`uint u = 1u;`},
+{k:"long",d:"64 位整数",e:`long x = 0L;`},
+{k:"ulong",d:"64 位无符号整数",e:`ulong y = 0UL;`},
+{k:"short",d:"16 位整数",e:`short s = 1;`},
+{k:"ushort",d:"16 位无符号整数",e:`ushort us = 1;`},
+{k:"nint/nuint",d:"本机字长整数（C# 9）",e:`nint p = 0;`},
+{k:"interface",d:"接口",e:`interface IDisposable { void Dispose(); }`},
+{k:"internal",d:"程序集内可见",e:`internal class C { }`},
+{k:"is",d:"类型判断（可带模式匹配声明变量）",e:`if (o is string s) { }`},
+{k:"lock",d:"线程同步锁",e:`lock (obj) { }`},
+{k:"namespace",d:"命名空间",e:`namespace MyApp { }`},
+{k:"new",d:"创建对象；隐藏基类成员；泛型约束",e:`var p = new Person();`},
+{k:"null",d:"空引用",e:`string s = null;`},
+{k:"object",d:"所有类型的基类",e:`object o = 5;`},
+{k:"operator",d:"重载运算符",e:`public static bool operator ==(A a, A b)`},
+{k:"out",d:"输出参数（方法内必须赋值）",e:`int.TryParse(s, out int n)`},
+{k:"override",d:"重写基类虚方法",e:`public override string ToString()`},
+{k:"params",d:"可变数量参数",e:`void F(params int[] a)`},
+{k:"private",d:"私有",e:`private int x;`},
+{k:"protected",d:"保护（类内+子类）",e:`protected int y;`},
+{k:"public",d:"公有",e:`public int z;`},
+{k:"readonly",d:"只读字段（构造后不可改）",e:`readonly int x = 5;`},
+{k:"record",d:"记录类型：不可变数据模型（C# 9）",e:`record Person(string Name, int Age);`},
+{k:"init",d:"init-only 属性：仅初始化时可赋值（C# 9）",e:`public int X { get; init; }`},
+{k:"required",d:"必需成员：创建时必须赋值（C# 11）",e:`public required string Name { get; set; }`},
+{k:"ref",d:"引用传递参数/返回",e:`void Swap(ref int a, ref int b)`},
+{k:"return",d:"返回",e:`return x;`},
+{k:"sealed",d:"密封：禁止继承/禁止重写",e:`sealed class C { }`},
+{k:"sizeof",d:"取类型字节大小",e:`sizeof(int)`},
+{k:"stackalloc",d:"在栈上分配内存（高性能场景）",e:`Span<int> s = stackalloc int[10];`},
+{k:"static",d:"静态成员",e:`static int count;`},
+{k:"string",d:"字符串",e:`string s = "hi";`},
+{k:"struct",d:"值类型结构体",e:`struct Point { public int X, Y; }`},
+{k:"switch",d:"多分支（含模式匹配）",e:`switch (x) { case > 0: ...; break; }`},
+{k:"this",d:"当前实例；扩展方法首参",e:`this.x = x;`},
+{k:"throw",d:"抛出异常",e:`throw new Exception("错");`},
+{k:"true",d:"布尔真",e:`bool b = true;`},
+{k:"try",d:"异常捕获块",e:`try { } catch { }`},
+{k:"typeof",d:"获取类型的 Type 对象",e:`Type t = typeof(int);`},
+{k:"unchecked",d:"关闭溢出检查",e:`unchecked { x++; }`},
+{k:"unsafe",d:"非安全代码块（可用指针）",e:`unsafe { int* p = &x; }`},
+{k:"using",d:"引入命名空间；自动释放资源",e:`using var f = File.OpenRead("a");`},
+{k:"var",d:"隐式类型局部变量",e:`var x = 5;`},
+{k:"virtual",d:"虚方法（可被重写）",e:`public virtual void F() { }`},
+{k:"void",d:"无返回值",e:`void F() { }`},
+{k:"volatile",d:"易变字段（多线程）",e:`volatile bool done;`},
+{k:"while",d:"条件循环",e:`while (x < 5) { x++; }`},
+{k:"async",d:"标记异步方法（上下文关键字）",e:`async Task F() { await t; }`},
+{k:"await",d:"等待异步完成（上下文关键字）",e:`await http.GetAsync(url);`},
+{k:"dynamic",d:"动态类型：运行时解析成员",e:`dynamic x = GetThing();`},
+{k:"nameof",d:"取成员名字符串（防硬编码）",e:`nameof(x)`},
+{k:"yield",d:"迭代器：逐个产出元素",e:`yield return 1;`},
+{k:"where",d:"泛型约束",e:`void F<T>() where T : class`},
+{k:"get/set",d:"属性的读取器/设置器",e:`public int X { get; set; }`}
+], note:"上下文关键字（仅特定位置生效）：add / alias / and / ascending / by / descending / equals / from / global / group / into / join / let / not / notnull / on / or / orderby / partial / remove / scoped / select / unmanaged / value / when —— 可作普通标识符使用。"},
+,{id:"java", name:"☕ Java", intro:"Java 以“一次编写，到处运行”闻名，关键字约 50 个，设计克制：没有指针运算、没有多继承，靠 JVM 保证跨平台。const/goto 是保留但从未启用的关键字。", rows:[
+{k:"abstract",d:"抽象类/方法：不能实例化",e:`abstract class A { abstract void f(); }`},
+{k:"assert",d:"断言（需 -ea 开启）",e:`assert x > 0 : "x必须为正";`},
+{k:"boolean",d:"布尔类型",e:`boolean ok = true;`},
+{k:"break",d:"跳出循环/switch",e:`break;`},
+{k:"byte",d:"8 位整数",e:`byte b = 10;`},
+{k:"case",d:"switch 分支",e:`case 1 -> System.out.println("一");`},
+{k:"catch",d:"捕获异常",e:`catch (IOException e) { }`},
+{k:"char",d:"16 位 Unicode 字符",e:`char c = 'A';`},
+{k:"class",d:"定义类",e:`class Person { }`},
+{k:"const",d:"保留字，未使用（用 final 代替）",e:`// 不能作为标识符`},
+{k:"continue",d:"跳过本次循环",e:`continue;`},
+{k:"default",d:"switch 默认分支；接口默认方法",e:`default void f() { }`},
+{k:"do",d:"do-while 循环",e:`do { } while (x > 0);`},
+{k:"double",d:"双精度浮点",e:`double d = 3.14;`},
+{k:"else",d:"if 的否则分支",e:`else { }`},
+{k:"enum",d:"枚举类型",e:`enum Color { RED, GREEN }`},
+{k:"extends",d:"继承类",e:`class B extends A { }`},
+{k:"final",d:"不可变：常量/不可继承类/不可重写方法",e:`final int N = 5;`},
+{k:"finally",d:"异常收尾块",e:`finally { f.close(); }`},
+{k:"float",d:"单精度浮点",e:`float f = 1.5f;`},
+{k:"for",d:"循环（含增强 for）",e:`for (String s : list) { }`},
+{k:"goto",d:"保留字，未使用",e:`// 不能作为标识符`},
+{k:"if",d:"条件判断",e:`if (x > 0) { }`},
+{k:"implements",d:"实现接口",e:`class C implements Runnable { }`},
+{k:"import",d:"导入包",e:`import java.util.*;`},
+{k:"instanceof",d:"类型判断（可带模式变量）",e:`if (o instanceof String s) { }`},
+{k:"int",d:"32 位整数",e:`int n = 0;`},
+{k:"interface",d:"接口",e:`interface I { void f(); }`},
+{k:"long",d:"64 位整数",e:`long x = 0L;`},
+{k:"native",d:"本地方法（JNI 调用 C/C++）",e:`native void f();`},
+{k:"new",d:"创建对象/数组",e:`List<String> l = new ArrayList<>();`},
+{k:"package",d:"包声明（文件首行）",e:`package com.example;`},
+{k:"private",d:"私有",e:`private int x;`},
+{k:"protected",d:"保护（包内+子类）",e:`protected int y;`},
+{k:"public",d:"公有",e:`public int z;`},
+{k:"return",d:"返回",e:`return x;`},
+{k:"short",d:"16 位整数",e:`short s = 1;`},
+{k:"static",d:"静态成员/静态块",e:`static int count;`},
+{k:"strictfp",d:"严格浮点运算（保证跨平台一致）",e:`strictfp class A { }`},
+{k:"super",d:"父类引用/构造",e:`super(1);`},
+{k:"switch",d:"多分支（含箭头新语法）",e:`switch (n) { case 1 -> f(); }`},
+{k:"synchronized",d:"同步锁（方法/代码块）",e:`synchronized (lock) { }`},
+{k:"this",d:"当前对象",e:`this.x = x;`},
+{k:"throw",d:"抛出异常对象",e:`throw new RuntimeException("错");`},
+{k:"throws",d:"声明方法可能抛出的异常",e:`void f() throws IOException`},
+{k:"transient",d:"标记不参与序列化",e:`transient int tmp;`},
+{k:"try",d:"异常捕获块（含 try-with-resources）",e:`try (var f = open()) { }`},
+{k:"void",d:"无返回值",e:`void f() { }`},
+{k:"volatile",d:"易变变量（多线程可见性）",e:`volatile boolean done;`},
+{k:"while",d:"条件循环",e:`while (x < 5) { x++; }`},
+{k:"var",d:"局部变量类型推导（Java 10，受限标识符）",e:`var list = new ArrayList<String>();`},
+{k:"record",d:"记录类：不可变数据载体（Java 16）",e:`record Point(int x, int y) { }`},
+{k:"sealed/permits",d:"密封类：限定可继承的子类（Java 17）",e:`sealed class A permits B, C { }`},
+{k:"yield",d:"switch 表达式产出值（Java 14）",e:`int n = switch (x) { default -> yield 0; };`}
+]},
+{id:"go", name:"🐹 Go", intro:"Go 只有 25 个关键字——刻意极简。没有继承、没有异常、没有泛型（1.18 前），用 goroutine + channel 把并发做到了极致，是云原生的 lingua franca。", rows:[
+{k:"break",d:"跳出循环/switch/select",e:`break`},
+{k:"case",d:"switch/select 分支（默认不穿透）",e:`case 1:`},
+{k:"chan",d:"通道类型：goroutine 间通信",e:`ch := make(chan int)`},
+{k:"const",d:"常量声明",e:`const Pi = 3.14`},
+{k:"continue",d:"跳过本次循环",e:`continue`},
+{k:"default",d:"switch/select 默认分支",e:`default:`},
+{k:"defer",d:"延迟执行：函数返回前按后进先出执行",e:`defer f.Close()`},
+{k:"else",d:"if 的否则分支",e:`} else {`},
+{k:"fallthrough",d:"switch 强制穿透到下一个 case",e:`fallthrough`},
+{k:"for",d:"唯一的循环关键字（兼任 while）",e:`for i := 0; i < 10; i++ { }`},
+{k:"func",d:"定义函数/方法",e:`func add(a, b int) int { return a+b }`},
+{k:"go",d:"启动 goroutine（轻量协程）",e:`go work()`},
+{k:"goto",d:"跳转到标签（限制多，少用）",e:`goto End`},
+{k:"if",d:"条件判断（可带初始化语句）",e:`if x := f(); x > 0 { }`},
+{k:"import",d:"导入包",e:`import "fmt"`},
+{k:"interface",d:"接口：方法集合（隐式实现）",e:`type Reader interface { Read() }`},
+{k:"map",d:"哈希表类型",e:`m := map[string]int{"a": 1}`},
+{k:"package",d:"包声明（文件首行）",e:`package main`},
+{k:"range",d:"遍历数组/切片/map/通道",e:`for i, v := range s { }`},
+{k:"return",d:"返回",e:`return x`},
+{k:"select",d:"多通道通信选择（常与 channel 搭配）",e:`select { case x := <-ch: }`},
+{k:"struct",d:"结构体",e:`type P struct { X, Y int }`},
+{k:"switch",d:"多分支（默认 break，无需写）",e:`switch n { case 1: }`},
+{k:"type",d:"类型定义/别名",e:`type ID int`},
+{k:"var",d:"变量声明",e:`var x int = 5`}
+]},
+{id:"js", name:"🌐 JavaScript", intro:"JavaScript 十天写就却统治了 Web：原型继承、事件循环、动态类型。let/const 替代 var、class 只是语法糖、async/await 让异步代码像同步一样写。", rows:[
+{k:"break",d:"跳出循环/switch",e:`break;`},
+{k:"case",d:"switch 分支",e:`case 1: ...; break;`},
+{k:"catch",d:"捕获异常",e:`catch (e) { console.log(e); }`},
+{k:"class",d:"定义类（原型继承的语法糖）",e:`class Dog { constructor(n){ this.n = n; } }`},
+{k:"const",d:"常量声明（引用不可变）",e:`const PI = 3.14;`},
+{k:"continue",d:"跳过本次循环",e:`continue;`},
+{k:"debugger",d:"断点：触发调试器暂停",e:`debugger;`},
+{k:"default",d:"switch 默认分支；export 默认导出",e:`export default App;`},
+{k:"delete",d:"删除对象属性",e:`delete obj.key;`},
+{k:"do",d:"do-while 循环",e:`do { } while (x > 0);`},
+{k:"else",d:"if 的否则分支",e:`else { }`},
+{k:"export",d:"导出模块成员",e:`export const x = 1;`},
+{k:"extends",d:"类继承",e:`class B extends A { }`},
+{k:"false",d:"布尔假",e:`let b = false;`},
+{k:"finally",d:"异常收尾块",e:`finally { }`},
+{k:"for",d:"循环（含 for...of / for...in）",e:`for (const x of arr) { }`},
+{k:"function",d:"定义函数",e:`function add(a, b) { return a + b; }`},
+{k:"if",d:"条件判断",e:`if (x > 0) { }`},
+{k:"import",d:"导入模块",e:`import React from 'react';`},
+{k:"in",d:"判断属性是否存在于对象",e:`if ('x' in obj) { }`},
+{k:"instanceof",d:"判断对象是否为某类实例",e:`if (d instanceof Date) { }`},
+{k:"let",d:"块级作用域变量声明",e:`let x = 1;`},
+{k:"new",d:"创建实例",e:`const d = new Date();`},
+{k:"null",d:"空值",e:`let x = null;`},
+{k:"return",d:"返回",e:`return x;`},
+{k:"super",d:"父类引用",e:`super(name);`},
+{k:"switch",d:"多分支",e:`switch (n) { case 1: break; }`},
+{k:"this",d:"当前上下文对象（指向随调用变）",e:`this.name = name;`},
+{k:"throw",d:"抛出异常",e:`throw new Error('错');`},
+{k:"true",d:"布尔真",e:`let b = true;`},
+{k:"try",d:"异常捕获块",e:`try { } catch (e) { }`},
+{k:"typeof",d:"返回值的类型字符串",e:`typeof 42 // "number"`},
+{k:"var",d:"函数作用域变量（老式，易踩坑）",e:`var x = 1;`},
+{k:"void",d:"void 运算符：求值后返回 undefined",e:`void 0`},
+{k:"while",d:"条件循环",e:`while (x < 5) { x++; }`},
+{k:"with",d:"扩展作用域链（已废弃，严格模式禁用）",e:`// 勿用`},
+{k:"yield",d:"生成器产出值",e:`function* g() { yield 1; }`},
+{k:"async",d:"标记异步函数",e:`async function f() { }`},
+{k:"await",d:"等待 Promise 完成",e:`const r = await fetch(url);`},
+{k:"static",d:"静态类成员",e:`static count = 0;`},
+{k:"of",d:"for...of 遍历可迭代对象（非保留字但常用）",e:`for (const x of [1,2]) { }`}
+], note:"严格模式保留字（不可作变量名）：implements / interface / package / private / protected / public / enum。"},
+,{id:"basic", name:"📺 BASIC", intro:"BASIC（初学者通用符号指令代码）是 1964 年为教学而生的语言，行号 + GOTO 曾是它的标志。不同方言（GW-BASIC / QBasic / Visual Basic）关键字略有差异，下面是经典 QBasic/GW-BASIC 的核心语句。", rows:[
+{k:"PRINT",d:"输出内容到屏幕",e:`PRINT "Hello, World!"`},
+{k:"INPUT",d:"等待用户输入",e:`INPUT "请输入姓名："; name$`},
+{k:"LET",d:"赋值（可省略不写）",e:`LET x = 5`},
+{k:"DIM",d:"声明数组/变量类型",e:`DIM score(50) AS INTEGER`},
+{k:"REM / '",d:"注释（REMark）",e:`REM 这是注释`},
+{k:"CLS",d:"清屏",e:`CLS`},
+{k:"END",d:"正常结束程序",e:`END`},
+{k:"STOP",d:"中断程序执行",e:`STOP`},
+{k:"FOR...NEXT",d:"计数循环",e:`FOR i = 1 TO 10\n  PRINT i\nNEXT i`},
+{k:"IF...THEN...ELSE",d:"条件判断",e:`IF x > 0 THEN PRINT "正" ELSE PRINT "负"`},
+{k:"WHILE...WEND",d:"条件循环（QBasic）",e:`WHILE x < 5\n  x = x + 1\nWEND`},
+{k:"DO...LOOP",d:"循环（可前测/后测条件）",e:`DO WHILE x < 5\n  x = x + 1\nLOOP`},
+{k:"SELECT CASE",d:"多分支选择",e:`SELECT CASE n\n  CASE 1: PRINT "一"\nEND SELECT`},
+{k:"GOTO",d:"跳转到行号/标签",e:`GOTO 100`},
+{k:"GOSUB...RETURN",d:"调用子程序并返回",e:`GOSUB 1000\n...\n1000 PRINT "子程序"\nRETURN`},
+{k:"SUB...END SUB",d:"定义子程序",e:`SUB ShowMsg\n  PRINT "hi"\nEND SUB`},
+{k:"FUNCTION...END FUNCTION",d:"定义有返回值的函数",e:`FUNCTION Add(a, b)\n  Add = a + b\nEND FUNCTION`},
+{k:"CALL",d:"调用子程序",e:`CALL ShowMsg`},
+{k:"DATA / READ / RESTORE",d:"内置数据：定义/读取/重置",e:`DATA 10, 20, 30\nREAD a, b, c`},
+{k:"OPEN / CLOSE",d:"打开/关闭文件",e:`OPEN "a.txt" FOR OUTPUT AS #1`},
+{k:"PRINT # / INPUT #",d:"写文件 / 读文件",e:`PRINT #1, "hello"`},
+{k:"LINE",d:"画直线/矩形",e:`LINE (0, 0)-(100, 100)`},
+{k:"CIRCLE",d:"画圆",e:`CIRCLE (160, 100), 50`},
+{k:"PSET",d:"画点",e:`PSET (10, 10), 4`},
+{k:"COLOR",d:"设置前景/背景色",e:`COLOR 14, 1`},
+{k:"SCREEN",d:"设置显示模式",e:`SCREEN 12`},
+{k:"LOCATE",d:"定位光标",e:`LOCATE 10, 20`},
+{k:"CHR$ / ASC",d:"ASCII 码与字符互转",e:`PRINT CHR$(65)  ' 输出 A`},
+{k:"LEFT$ / RIGHT$ / MID$",d:"取字符串左/右/中间部分",e:`PRINT LEFT$("Hello", 2)`},
+{k:"LEN",d:"字符串长度",e:`PRINT LEN("abc")`},
+{k:"INT / RND",d:"取整 / 随机数",e:`x = INT(RND * 100)`},
+{k:"SIN / COS / TAN / SQR / ABS",d:"数学函数",e:`PRINT SQR(16)`},
+{k:"INKEY$",d:"读取键盘（不等待）",e:`k$ = INKEY$`},
+{k:"BEEP / SOUND / PLAY",d:"发声",e:`BEEP`},
+{k:"ON ERROR GOTO",d:"错误处理跳转",e:`ON ERROR GOTO ErrHandler`}
+], note:"注意：BASIC 方言众多，Visual Basic / VB.NET 的关键字（如 Dim / Sub / Function 保留，但行号、GOTO 已淡出）与此处经典 BASIC 有差异。"},
+{id:"dos", name:"🖥️ DOS 批处理", intro:"DOS 批处理（.bat）是 Windows 的自动化脚本：没有真正的“关键字”，而是一组内部命令 + 特殊符号。掌握下面这些，就能写出自动备份、批量改名等实用脚本。", rows:[
+{k:"@echo off",d:"关闭命令回显（脚本首行标配）",e:`@echo off`},
+{k:"echo",d:"输出文本；echo. 输出空行",e:`echo Hello, World!`},
+{k:"rem / ::",d:"注释",e:`rem 这是注释`},
+{k:"set",d:"设置环境变量",e:`set name=张三`},
+{k:"set /p",d:"交互式输入赋值",e:`set /p name=请输入姓名：`},
+{k:"set /a",d:"算术运算（支持 0x 十六进制、0 八进制）",e:`set /a sum=1+2\nset /a n=0xFF`},
+{k:"%var% / !var!",d:"引用变量 / 延迟展开（需 setlocal enabledelayedexpansion）",e:`echo %name%\necho !name!`},
+{k:"%1 %2 ...",d:"脚本参数（%0 是脚本自身）",e:`echo 第一个参数是 %1`},
+{k:"if",d:"条件判断（字符串/数字比较）",e:`if "%a%"=="1" echo 相等`},
+{k:"if exist",d:"判断文件/目录是否存在",e:`if exist a.txt echo 文件存在`},
+{k:"if errorlevel",d:"判断上一条命令的退出码",e:`if errorlevel 1 echo 出错了`},
+{k:"for",d:"遍历文件/字符串集合",e:`for %%i in (*.txt) do echo %%i`},
+{k:"for /l",d:"计数循环",e:`for /l %%i in (1,1,10) do echo %%i`},
+{k:"for /f",d:"解析文件/命令输出",e:`for /f "tokens=1" %%a in (a.txt) do echo %%a`},
+{k:"goto",d:"跳转到标签",e:`goto end`},
+{k:":label",d:"定义标签（goto 的目标）",e:`:end`},
+{k:"call",d:"调用另一批处理或本文件子程序",e:`call :sub\ncall other.bat`},
+{k:"exit /b",d:"退出脚本（/b 仅退出当前调用，可带返回码）",e:`exit /b 0`},
+{k:"pause",d:"暂停，显示“请按任意键继续”",e:`pause`},
+{k:"choice",d:"让用户按键选择",e:`choice /c YN /m "继续吗"`},
+{k:"setlocal/endlocal",d:"局部环境（变量不污染外部）",e:`setlocal enabledelayedexpansion`},
+{k:"shift",d:"参数左移（处理超过 9 个参数）",e:`shift`},
+{k:"> / >>",d:"重定向：覆盖写入 / 追加写入",e:`echo hi > a.txt\necho hi >> a.txt`},
+{k:"|",d:"管道：把输出传给下一条命令",e:`dir | find "txt"`},
+{k:"& / && / ||",d:"连接多条命令；&& 成功才继续；|| 失败才继续",e:`cd d:\\work && dir`},
+{k:"cd / dir",d:"切换目录 / 列目录",e:`cd d:\\work\ndir`},
+{k:"copy / del / ren",d:"复制 / 删除 / 重命名",e:`copy a.txt b.txt`},
+{k:"md / rd",d:"创建 / 删除目录",e:`md newdir`},
+{k:"type",d:"显示文本文件内容",e:`type a.txt`},
+{k:"cls / title / color",d:"清屏 / 设标题 / 设颜色",e:`title 我的脚本\ncolor 0a`},
+{k:"pushd / popd",d:"压栈切换目录 / 弹栈返回",e:`pushd d:\\work\npopd`}
+], note:"批处理变量不分类型全是字符串；%%i 用于脚本内，%i 用于命令行直接执行——这是最常见的坑。"}
+];
+
+/* ================= 渲染 ================= */
+const $ = id => document.getElementById(id);
+const kwBox = $("kw-sections");
+
+/* 顶部语言导航 */
+$("langnav").innerHTML =
+  `<a href="#numsys">🔢 数制基础</a>` +
+  SECTIONS.map(s => `<a href="#sec-${s.id}">${s.name}</a>`).join("");
+
+/* 生成关键字表格 */
+SECTIONS.forEach(s => {
+  const sec = document.createElement("section");
+  sec.className = "doc kwsec";
+  sec.id = "sec-" + s.id;
+  sec.dataset.name = s.name + " " + s.rows.map(r => r.k).join(" ");
+  sec.innerHTML = `<h2>${s.name} <span class="cnt">共 ${s.rows.length} 个</span></h2>
+    <p class="lede">${s.intro}</p>
+    ${s.note ? `<div class="note">${s.note}</div>` : ""}
+    <table><thead><tr><th style="width:170px">关键字</th><th>说明</th><th style="width:38%">示例</th></tr></thead><tbody></tbody></table>`;
+  const tb = sec.querySelector("tbody");
+  s.rows.forEach(r => {
+    const tr = document.createElement("tr");
+    tr.innerHTML = `<td class="k"></td><td class="d"></td><td></td>`;
+    tr.children[0].textContent = r.k;
+    tr.children[1].textContent = r.d;
+    const code = document.createElement("code");
+    code.textContent = r.e;
+    tr.children[2].appendChild(code);
+    tb.appendChild(tr);
+  });
+  kwBox.appendChild(sec);
+});
+
+/* ================= 搜索 ================= */
+$("q").addEventListener("input", e => {
+  const q = e.target.value.trim().toLowerCase();
+  const info = $("searchinfo");
+  let total = 0;
+  document.querySelectorAll(".doc").forEach(sec => {
+    if (sec.id === "numsys") {
+      const hit = !q || sec.textContent.toLowerCase().includes(q);
+      sec.style.display = hit ? "" : "none";
+      return;
+    }
+    let n = 0;
+    sec.querySelectorAll("tbody tr").forEach(tr => {
+      const hit = !q || tr.textContent.toLowerCase().includes(q);
+      tr.style.display = hit ? "" : "none";
+      if (hit) n++;
+    });
+    sec.style.display = n ? "" : "none";
+    total += n;
+  });
+  if (q) {
+    info.style.display = "block";
+    info.textContent = total ? `🔍 找到 ${total} 个相关关键字` : "😅 没有找到相关关键字，换个词试试";
+  } else {
+    info.style.display = "none";
+  }
+});
+
+/* ================= 进制转换器 ================= */
+function convert() {
+  const raw = $("cv-in").value.trim();
+  const base = parseInt($("cv-base").value);
+  const out = $("cv-out");
+  if (!raw) { out.innerHTML = ""; return; }
+  const re = {2:/^[01]+$/, 8:/^[0-7]+$/, 10:/^\d+$/, 16:/^[0-9a-fA-F]+$/}[base];
+  if (!re.test(raw)) { out.innerHTML = `<span class="err">⚠️ 输入不符合所选进制（${{2:"二进制",8:"八进制",10:"十进制",16:"十六进制"}[base]}）</span>`; return; }
+  const n = parseInt(raw, base);
+  out.innerHTML = `
+    <div class="cv-line"><span>二进制</span><code>0b${n.toString(2)}</code></div>
+    <div class="cv-line"><span>八进制</span><code>0o${n.toString(8)}</code></div>
+    <div class="cv-line"><span>十进制</span><code>${n.toString(10)}</code></div>
+    <div class="cv-line"><span>十六进制</span><code>0x${n.toString(16).toUpperCase()}</code></div>`;
+}
+$("cv-in").addEventListener("input", convert);
+$("cv-base").addEventListener("change", convert);
+</script>
+</body>
+</html>
